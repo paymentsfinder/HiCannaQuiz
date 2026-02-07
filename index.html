@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cannabis Payment Systems Quiz | JJ Merchant Services</title>
+  <meta name="description" content="Discover hidden costs in your payment processing. Get a free custom report in minutes.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"> <!-- Your custom CSS -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script> <!-- Replace with your GA ID -->
+</head>
+<body>
+  <div class="container-fluid bg-light min-vh-100 d-flex align-items-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <!-- Header -->
+          <div class="text-center mb-4">
+            <h1 class="fw-bold text-success">Payment Systems Quiz</h1>
+            <p class="lead text-muted">Are your payments costing you more than you think? Take 2 minutes for insights.</p>
+          </div>
+
+          <!-- Multi-Step Form -->
+          <form id="quizForm" class="card shadow p-4">
+            <!-- Step 1: Welcome & Personal Info -->
+            <div class="step active" data-step="1">
+              <h3 class="text-success">Step 1: Let's Get Started</h3>
+              <div class="mb-3">
+                <label for="fullName" class="form-label">Full Name *</label>
+                <input type="text" class="form-control" id="fullName" name="fullName" required>
+              </div>
+              <div class="mb-3">
+                <label for="businessName" class="form-label">Business Name *</label>
+                <input type="text" class="form-control" id="businessName" name="businessName" required>
+              </div>
+              <div class="mb-3">
+                <label for="businessEmail" class="form-label">Business Email *</label>
+                <input type="email" class="form-control" id="businessEmail" name="businessEmail" required>
+              </div>
+              <div class="mb-3">
+                <label for="cellPhone" class="form-label">Cell Phone (Optional)</label>
+                <input type="tel" class="form-control" id="cellPhone" name="cellPhone">
+              </div>
+              <button type="button" class="btn btn-success w-100" onclick="nextStep(1)">Next: Take the Quiz</button>
+            </div>
+
+            <!-- Step 2: Quiz Questions -->
+            <div class="step" data-step="2">
+              <h3 class="text-success">Step 2: Quick Quiz</h3>
+              <p class="text-muted">Answer honestly—your results are personalized.</p>
+
+              <!-- Business Type -->
+              <div class="mb-3">
+                <label class="form-label">What type of cannabis business do you run? *</label>
+                <select class="form-select" id="businessType" name="businessType" required>
+                  <option value="">Select...</option>
+                  <option value="Dispensary">Dispensary</option>
+                  <option value="Grower">Grower</option>
+                  <option value="Processor">Processor</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <!-- Monthly Volume -->
+              <div class="mb-3">
+                <label class="form-label">Monthly processing volume? *</label>
+                <select class="form-select" id="monthlyVolume" name="Monthly processing volume?" required>
+                  <option value="">Select...</option>
+                  <option value="$100K+"> $100K+ </option>
+                  <option value="$25K-$100K"> $25K-$100K </option>
+                  <option value="&lt;$25K"> &lt;$25K </option>
+                </select>
+              </div>
+
+              <!-- Payment Methods -->
+              <div class="mb-3">
+                <label class="form-label">Current primary payment methods? *</label>
+                <select class="form-select" id="paymentMethods" name="paymentMethods" required>
+                  <option value="">Select...</option>
+                  <option value="Cash">Cash Only</option>
+                  <option value="ATM workaround">ATM Workaround</option>
+                  <option value="Combination">Combination (Cash + Card)</option>
+                </select>
+              </div>
+
+              <!-- Funds Frozen -->
+              <div class="mb-3">
+                <label class="form-label">Have you ever had funds frozen by a bank or processor? *</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="fundsFrozenYes" name="fundsFrozen" value="Yes" required>
+                  <label class="form-check-label" for="fundsFrozenYes">Yes</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="fundsFrozenNo" name="fundsFrozen" value="No" required>
+                  <label class="form-check-label" for="fundsFrozenNo">No</label>
+                </div>
+              </div>
+
+              <!-- Biggest Frustration -->
+              <div class="mb-3">
+                <label for="biggestFrustration" class="form-label">Biggest frustration with payments today? *</label>
+                <select class="form-select" id="biggestFrustration" name="biggestFrustration" required>
+                  <option value="">Select...</option>
+                  <option value="High fees">High fees eating margins</option>
+                  <option value="Compliance headaches">Compliance headaches / Bank freezes</option>
+                  <option value="Slow settlements">Slow settlements delaying cash flow</option>
+                  <option value="Limited options">Limited payment options for customers</option>
+                </select>
+              </div>
+
+              <!-- Matters Most (for Segment) -->
+              <div class="mb-3">
+                <label class="form-label">What matters most right now? *</label>
+                <select class="form-select" id="mattersMost" name="mattersMost" required onchange="setSegmentKey()">
+                  <option value="">Select...</option>
+                  <option value="Lower fees">Lower fees</option>
+                  <option value="Stability">Stability (no freezes)</option>
+                  <option value="Growth support">Growth support (scaling)</option>
+                </select>
+              </div>
+              <input type="hidden" id="segmentKey" name="segmentKey" value="general">
+
+              <!-- Navigation -->
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-secondary" onclick="prevStep(2)">Back</button>
+                <button type="button" class="btn btn-success" onclick="nextStep(2)">Review & Submit</button>
+              </div>
+            </div>
+
+            <!-- Step 3: Review & Submit (Formatted Cards) -->
+            <div class="step" data-step="3">
+              <h3 class="text-success">Step 3: Review Your Answers</h3>
+              <div id="reviewSummary" class="mb-3"></div>
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-secondary" onclick="prevStep(3)">Back & Edit</button>
+                <button type="submit" class="btn btn-success">Generate My Free Report</button>
+              </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="text-center d-none mt-3">
+              <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Generating report...</span>
+              </div>
+              <p class="mt-2">Creating your custom PDF report – this takes about 30 seconds.</p>
+            </div>
+          </form>
+
+          <!-- Progress Bar -->
+          <div class="progress mt-4" style="height: 5px;">
+            <div id="progressBar" class="progress-bar bg-success" style="width: 0%"></div>
+          </div>
+
+          <!-- Success Modal -->
+          <div class="modal fade" id="successModal" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                  <h5 class="modal-title">Success!</h5>
+                </div>
+                <div class="modal-body">
+                  <p>Your custom PDF report is being generated. Check your email shortly for details and your personalized savings analysis. Our analyst will review and send it promptly.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-success" data-bs-dismiss="modal">Done</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxWuqRWbgG5rBsTv_Lysc1gy7dlDUOE0meyHRnwkw3m3JMQKbGk8d2xp9CBya1ZWtGkXA/exec'; // Replace with your deployed GAS URL
+    let currentStep = 1;
+
+    function updateProgress() {
+      const progress = (currentStep / 3) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+    }
+
+    function nextStep(step) {
+      if (!validateStep(step)) return;
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.querySelector(`[data-step="${step + 1}"]`).classList.add('active');
+      currentStep++;
+      updateProgress();
+    }
+
+    function prevStep(step) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.querySelector(`[data-step="${step - 1}"]`).classList.add('active');
+      currentStep--;
+      updateProgress();
+    }
+
+    function validateStep(step) {
+      const fields = document.querySelectorAll(`[data-step="${step}"] [required]`);
+      for (let field of fields) {
+        if (!field.value.trim()) {
+          field.classList.add('is-invalid');
+          return false;
+        }
+        field.classList.remove('is-invalid');
+      }
+      // Email validation
+      const emailField = document.getElementById('businessEmail');
+      if (emailField && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value)) {
+        emailField.classList.add('is-invalid');
+        return false;
+      }
+      return true;
+    }
+
+    function setSegmentKey() {
+      const mattersMost = document.getElementById('mattersMost').value;
+      const segmentMap = {
+        'Lower fees': 'fee-conscious',
+        'Stability': 'compliance-risk',
+        'Growth support': 'growth-focused'
+      };
+      document.getElementById('segmentKey').value = segmentMap[mattersMost] || 'general';
+    }
+
+    function generateReviewSummary() {
+      const formData = new FormData(document.getElementById('quizForm'));
+      let summary = `
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card mb-3">
+              <div class="card-header bg-success text-white"><h6>Personal Info</h6></div>
+              <div class="card-body">
+                <p><strong>Full Name:</strong> ${formData.get('fullName') || 'N/A'}</p>
+                <p><strong>Business Name:</strong> ${formData.get('businessName') || 'N/A'}</p>
+                <p><strong>Email:</strong> ${formData.get('businessEmail') || 'N/A'}</p>
+                <p><strong>Phone:</strong> ${formData.get('cellPhone') || 'N/A'}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card mb-3">
+              <div class="card-header bg-primary text-white"><h6>Business Profile</h6></div>
+              <div class="card-body">
+                <p><strong>Type:</strong> ${formData.get('businessType') || 'N/A'}</p>
+                <p><strong>Volume:</strong> ${formData.get('Monthly processing volume?') || 'N/A'}</p>
+                <p><strong>Payment Methods:</strong> ${formData.get('paymentMethods') || 'N/A'}</p>
+                <p><strong>Segment:</strong> ${formData.get('segmentKey') || 'General'}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card mb-3">
+              <div class="card-header bg-warning text-dark"><h6>Quiz Answers</h6></div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p><strong>Funds Frozen:</strong> ${formData.get('fundsFrozen') || 'N/A'}</p>
+                    <p><strong>Biggest Frustration:</strong> ${formData.get('biggestFrustration') || 'N/A'}</p>
+                  </div>
+                  <div class="col-md-6">
+                    <p><strong>Matters Most:</strong> ${formData.get('mattersMost') || 'N/A'}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      document.getElementById('reviewSummary').innerHTML = summary;
+    }
+
+    document.getElementById('quizForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (currentStep !== 3) {
+        alert('Please complete all steps first.');
+        return;
+      }
+      generateReviewSummary();
+
+      // Show simple loading spinner
+      const loadingSpinner = document.getElementById('loadingSpinner');
+      loadingSpinner.classList.remove('d-none');
+
+      const formData = new FormData(e.target);
+      // Convert to URLSearchParams for GAS compatibility
+      const params = new URLSearchParams();
+      for (let [key, value] of formData.entries()) {
+        params.append(key, value);
+      }
+
+      console.log('Submitting...');  // Debug log
+
+      try {
+        const response = await fetch(GAS_WEB_APP_URL, {
+          method: 'POST',
+          body: params
+        });
+        const result = await response.text();
+        console.log('Response:', result);  // Debug: Should log "SUCCESS"
+
+        // Hide loading
+        loadingSpinner.classList.add('d-none');
+
+        if (response.ok && result === 'SUCCESS') {
+          const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+          successModal.show();
+          document.getElementById('quizForm').reset();
+          currentStep = 1;
+          updateProgress();
+        } else {
+          alert(`Submit failed: ${result || 'Unknown error'}`);
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+        loadingSpinner.classList.add('d-none');
+        alert('Network error. Check console for details.');
+      }
+    });
+
+    // GA Tracking (optional)
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID'); // Replace
+  </script>
+</body>
+</html>
